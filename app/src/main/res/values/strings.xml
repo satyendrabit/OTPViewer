@@ -1,0 +1,70 @@
+<resources>
+    <string name="app_name">OTPViewer</string>
+    <string name="title_activity_otpviewer_settings">OTP Viewer</string>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact
+        based on your message history
+    </string>
+
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_filter_words">OTP,Password,Onetime,dynamic access codes</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+
+    <string name="pref_title_new_message_notifications">New message notifications</string>
+
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="pref_ringtone_silent">Silent</string>
+
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="disable_otpviewer_text_title">OTPViewer Enable/Disable</string>
+    <string name="disable_OTPViewer_detail">Disable It</string>
+    <string name="otp_text_search_filter">Text to be filtered</string>
+    <string name="filter_text_hint">Enter common Text your OTP Message Contains, followed by ,</string>
+    <string name="auto_dismiss_summary">Enter time to dismiss otpviewer in seconds/n Enter 0 to cancel auto dismiss</string>
+    <string name="auto_dismiss_title">Time to Dismiss OTPViewer</string>
+    <string name="auto_dismiss_hint">Enter value in seconds to dismiss auto cancel</string>
+    <string name="defualt_otp_dismiss_value">0</string>
+</resources>

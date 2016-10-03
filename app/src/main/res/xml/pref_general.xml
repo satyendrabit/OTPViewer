@@ -1,0 +1,43 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="otp_viewer_switch"
+        android:summary="@string/disable_OTPViewer_detail"
+        android:summaryOff="Enable OTPViewer"
+        android:summaryOn="Disable OTPViewer"
+        android:switchTextOff="Disabled"
+        android:switchTextOn="Enabled"
+        android:textOff="On"
+        android:textOn="Disable Button to stop OtpViewer"
+        android:title="@string/disable_otpviewer_text_title" />
+
+    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
+    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:capitalize="words"
+        android:hint="@string/filter_text_hint"
+        android:inputType="textCapWords"
+        android:key="OTP_FILTER_TEXT"
+        android:maxHeight="100dp"
+        android:maxLines="10"
+        android:selectAllOnFocus="false"
+        android:text=""
+        android:title="@string/otp_text_search_filter" />
+    <EditTextPreference
+        android:defaultValue="@string/defualt_otp_dismiss_value"
+        android:hint="@string/auto_dismiss_hint"
+        android:inputType="number"
+        android:key="OTP_VIEWER_DISMISS"
+        android:maxHeight="100dp"
+        android:maxLines="10"
+        android:selectAllOnFocus="false"
+        android:summary="@string/auto_dismiss_summary"
+        android:title="@string/auto_dismiss_title" />
+
+    <!-- NOTE: Hide buttons to simplify the UI. Users can touch outside the dialog to
+         dismiss it. -->
+    <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
+
+
+</PreferenceScreen>
