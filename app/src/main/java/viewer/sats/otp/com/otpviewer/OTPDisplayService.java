@@ -1,20 +1,29 @@
 package viewer.sats.otp.com.otpviewer;
 
+import android.Manifest;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class OTPDisplayService extends Service implements OnTouchListener {
+    public static final int NOTIFICATION_ID = 1;
+    public static String NOTIFCATION_ID = "NOTIFICATIONID";
     public static String OTP_VIEWER_DISMISS = "OTP_VIEWER_DISMISS";
     public static String TAG = OTPDisplayService.class.getSimpleName();
     Button mButton;
@@ -36,10 +45,19 @@ public class OTPDisplayService extends Service implements OnTouchListener {
         //  mButton = new Button(this);
         //  otpWindow=new OTPWindow(this);
         // otpWindow=new OTPWindow(this);
+
+
         otpView = new OTPView(this);
 //        mButton.setText("OTP Message");
         // mButton.setOnTouchListener(this);
         otpView.setOnTouchListener(this);
+
+        if (checkPermission()) {
+            buildNotificationForPermission();
+            Toast.makeText(this, "Need permissions to work otpViewer, Please grant permission by tapping in NotifcationBar", Toast.LENGTH_SHORT).show();
+            stopSelf();/// No need to go further you dont have permission to draw window
+
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             // mButton.setBackgroundColor(getColor(R.color.otpbackground_color));
@@ -62,14 +80,6 @@ public class OTPDisplayService extends Service implements OnTouchListener {
         params.setTitle("Load Average");
         wm = (WindowManager) getSystemService(WINDOW_SERVICE);
         wm.addView(otpView, params);
-//        mButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                wm.removeView(mButton);
-//                mButton=null;
-//                stopSelf();
-//            }
-//        });
         SharedPreferences sharedPrefs = PreferenceManager
                 .getDefaultSharedPreferences(this);
         String number = sharedPrefs.getString(OTP_VIEWER_DISMISS, "0");
@@ -128,12 +138,6 @@ public class OTPDisplayService extends Service implements OnTouchListener {
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        //Toast.makeText(this,"Overlay button event", Toast.LENGTH_SHORT).show();
-//        if(mButton!=null) {
-//            wm.removeViewImmediate(mButton);
-//            mButton = null;
-//        }
-
         if (otpView != null) {
             wm.removeViewImmediate(otpView);
             otpView = null;
@@ -142,5 +146,36 @@ public class OTPDisplayService extends Service implements OnTouchListener {
         return false;
     }
 
+    private boolean checkPermission() {
+
+        String permission = "android.permission.SYSTEM_ALERT_WINDOW";
+        boolean alerwindowpermission = (this.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED);
+        boolean recievemessagepermission = (this.checkCallingOrSelfPermission(Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_DENIED);
+
+        Log.i(TAG, "checkPermission: " + alerwindowpermission + "," + recievemessagepermission);
+
+        return alerwindowpermission && recievemessagepermission;
+
+    }
+
+    public void buildNotificationForPermission() {
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getBaseContext())
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Permission Required")
+                .setContentText(" To work OTPViewer requires SMS Read Permission.")
+                .setAutoCancel(true);
+
+        Intent myintent = new Intent(this, OTPViewerSettingsActivity.class);
+        myintent.putExtra(NOTIFCATION_ID, NOTIFICATION_ID);
+        Intent intent[] = {myintent};
+
+        PendingIntent resultPendingIntent = PendingIntent.getActivities(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setContentIntent(resultPendingIntent);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(NOTIFICATION_ID, builder.build());
+
+
+    }
 
 }

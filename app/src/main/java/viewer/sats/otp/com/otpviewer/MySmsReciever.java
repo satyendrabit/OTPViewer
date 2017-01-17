@@ -82,19 +82,6 @@ public class MySmsReciever extends BroadcastReceiver {
                 return true;
             }
         }
-
-//        if(message.contains("otp")|| message.contains("one time")||
-//                message.contains("access code")|| message.contains("password")|| message.contains("dynamic")){
-//            return true;
-//        }
-
-//       Pattern pattern =Pattern.compile("\\s{1}[0-9]{4,6}\\s{1}");
-//        Matcher matcher=  pattern.matcher(message);
-//        if(matcher.find()){
-//            return true;
-//        }
-
-
         return false;
     }
 }

@@ -2,6 +2,7 @@ package viewer.sats.otp.com.otpviewer;
 
 import android.Manifest;
 import android.annotation.TargetApi;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        cancelNotificationIfExists();
         // startService(new Intent(this,OTPWatcherService.class));
 
         //  Toast.makeText(this,"Service Started",Toast.LENGTH_LONG).show();;
@@ -114,6 +116,16 @@ public class MainActivity extends AppCompatActivity {
 
             if (Settings.canDrawOverlays(this)) {
                 // continue here - permission was granted
+            }
+        }
+    }
+
+    public void cancelNotificationIfExists() {
+        NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (getIntent() != null) {
+            int id = getIntent().getIntExtra(OTPDisplayService.NOTIFCATION_ID, -1);
+            if (id != -1) {
+                manager.cancel(id);
             }
         }
     }
